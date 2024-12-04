@@ -1,11 +1,6 @@
 import "./pages/index.css";
 import { initialCards } from "./scripts/cards.js";
-import {
-  createCard,
-  deleteCard,
-  likeCard,
-  handleViewImage,
-} from "./scripts/card.js";
+import { createCard, deleteCard, likeCard } from "./scripts/card.js";
 import { openModal, closeModal } from "./scripts/modal.js";
 
 // @todo: DOM узлы
@@ -98,6 +93,18 @@ function attachEventListeners() {
   formNewCard.addEventListener("submit", handleNewCardFormSubmit);
   addOpenModalListeners();
   addCloseModalListeners();
+}
+
+function handleViewImage(cardData) {
+  const popupImage = document.querySelector(".popup_type_image");
+  const popupImageElement = popupImage.querySelector(".popup__image");
+  const popupCaption = popupImage.querySelector(".popup__caption");
+
+  popupImageElement.src = cardData.link;
+  popupImageElement.alt = cardData.name;
+  popupCaption.textContent = cardData.name;
+
+  openModal(popupImage);
 }
 
 // @todo: Запуск приложения
