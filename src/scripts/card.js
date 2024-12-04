@@ -45,15 +45,3 @@ export function likeCard(cardElement) {
   const likeButton = cardElement.querySelector(".card__like-button");
   likeButton.classList.toggle("card__like-button_is-active");
 }
-
-export function handleViewImage(cardData) {
-  const popupImage = document.querySelector(".popup_type_image");
-  const popupImageElement = popupImage.querySelector(".popup__image");
-  const popupCaption = popupImage.querySelector(".popup__caption");
-
-  popupImageElement.src = cardData.link;
-  popupImageElement.alt = cardData.name;
-  popupCaption.textContent = cardData.name;
-
-  openModal(popupImage);
-}
