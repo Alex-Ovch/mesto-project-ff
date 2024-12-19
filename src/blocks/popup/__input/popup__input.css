@@ -14,6 +14,21 @@
   margin-bottom: 0;
 }
 
+/* Стили для поля с ошибкой */
+.popup__input_type_error {
+  border-bottom: 1px solid red; /* Красная нижняя граница */
+  outline: none;
+}
+
+/* Стили для текста ошибки */
+.popup__error_visible {
+  color: red;
+  font-size: 12px;
+  line-height: 14px;
+  margin-top: 5px;
+  display: block;
+}
+
 @media screen and (max-width: 568px) {
   .popup__title {
     font-size: 12px;
