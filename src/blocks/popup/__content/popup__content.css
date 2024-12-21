@@ -9,6 +9,14 @@
   padding: 34px 36px;
 }
 
+.popup_type_delete .popup__content {
+  min-height: 0;
+}
+
+.popup_type_avatar .popup__content {
+  min-height: 0;
+}
+
 @media screen and (max-width: 568px) {
   .popup__content {
     width: 100%;

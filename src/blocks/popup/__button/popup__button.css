@@ -28,6 +28,10 @@
   pointer-events: none;
 }
 
+.popup_type_delete .popup__button {
+  margin-top: 38px;
+}
+
 @media screen and (max-width: 568px) {
   .popup__button {
     font-size: 14px;

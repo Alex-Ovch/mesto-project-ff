@@ -1,37 +1,39 @@
-// Функция открытия модального окна
+// Открытие попапа
 export function openModal(modal) {
-  modal.style.visibility = "visible";
+  modal.style.visibility = "visible"; // Сделать попап видимым
 
-  modal.classList.add("popup_is-animated");
+  modal.classList.add("popup_is-animated"); // Добавить анимацию
 
   setTimeout(() => {
-    modal.classList.add("popup_is-opened");
+    modal.classList.add("popup_is-opened"); // Открыть попап с анимацией
   }, 10);
 
-  document.addEventListener("keydown", handleEscapeKey);
-
-  modal.addEventListener("click", handleOverlayClick);
+  document.addEventListener("keydown", handleEscapeKey); // Слушатель для клавиши Esc
+  modal.addEventListener("click", handleOverlayClick); // Слушатель для клика по оверлею
 }
 
-// Функция закрытия модального окна
+// Закрытие попапа
 export function closeModal(modal) {
-  modal.classList.remove("popup_is-opened");
+  modal.classList.remove("popup_is-opened"); // Удалить открытый попап
 
   setTimeout(() => {
-    modal.style.visibility = "hidden";
-  }, 600);
-  document.removeEventListener("keydown", handleEscapeKey);
-  modal.removeEventListener("click", handleOverlayClick);
+    modal.style.visibility = "hidden"; // Сделать попап невидимым
+    modal.classList.remove("popup_is-animated"); // Удалить анимацию
+  }, 600); // Время задержки перед скрытием
+
+  document.removeEventListener("keydown", handleEscapeKey); // Удалить обработчик клавиши Esc
+  modal.removeEventListener("click", handleOverlayClick); // Удалить обработчик клика
 }
 
-// Функция для закрытия попапа при нажатии на оверлей
+// Закрытие попапа при нажатии на оверлей
 function handleOverlayClick(evt) {
-  if (evt.target.classList.contains("popup_is-opened")) {
+  if (evt.target.classList.contains("popup")) {
+    // Проверка на клик по попапу
     closeModal(evt.target);
   }
 }
 
-// Функция для закрытия попапа при нажатии на клавишу Esc
+// Закрытие попапа при нажатии на клавишу Esc
 function handleEscapeKey(evt) {
   if (evt.key === "Escape") {
     const openedPopup = document.querySelector(".popup_is-opened");
@@ -39,4 +41,16 @@ function handleEscapeKey(evt) {
       closeModal(openedPopup);
     }
   }
+}
+
+// Открытие попапа аватара
+export function openAvatarPopup() {
+  const avatarPopup = document.querySelector(".popup_type_avatar");
+  openModal(avatarPopup);
+}
+
+// Закрытие попапа аватара
+export function closeAvatarPopup() {
+  const avatarPopup = document.querySelector(".popup_type_avatar");
+  closeModal(avatarPopup);
 }
