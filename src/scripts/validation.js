@@ -13,7 +13,6 @@ const showInputError = (formElement, inputElement, config, errorMessage) => {
   if (errorElement) {
     inputElement.classList.add(config.inputErrorClass);
     errorElement.textContent = errorMessage;
-    errorElement.style.visibility = "visible"; // Показываем ошибку
     errorElement.classList.add(config.errorClass);
   }
 };
@@ -24,23 +23,14 @@ const hideInputError = (formElement, inputElement, config) => {
   if (errorElement) {
     inputElement.classList.remove(config.inputErrorClass);
     errorElement.textContent = "";
-    errorElement.style.visibility = "hidden"; // Скрываем ошибку
     errorElement.classList.remove(config.errorClass);
   }
 };
 
 // Проверка поля на валидность
 const checkInputValidity = (formElement, inputElement, config) => {
-  const pattern = inputElement.pattern
-    ? new RegExp(inputElement.pattern)
-    : null;
-
-  // Проверка для поля "Ссылка на картинку" на валидность URL
-  if (inputElement.type === "url" && inputElement.validity.typeMismatch) {
-    inputElement.setCustomValidity(inputElement.dataset.errorMessage);
-  }
-  // Проверка для поля "Название" с регулярным выражением
-  else if (pattern && !pattern.test(inputElement.value)) {
+  // Используем встроенную проверку браузера для URL и паттерна
+  if (inputElement.validity.patternMismatch) {
     inputElement.setCustomValidity(inputElement.dataset.errorMessage);
   } else {
     inputElement.setCustomValidity(""); // Сброс ошибки, если поле валидно
@@ -88,8 +78,7 @@ const hasInvalidInput = (inputList) => {
 // Переключение состояния кнопки отправки
 const toggleButtonState = (inputList, buttonElement, config) => {
   if (hasInvalidInput(inputList)) {
-    buttonElement.classList.add(config.inactiveButtonClass);
-    buttonElement.disabled = true;
+    disableSubmitButton(buttonElement, config); // Используем новый метод
   } else {
     buttonElement.classList.remove(config.inactiveButtonClass);
     buttonElement.disabled = false;
@@ -108,6 +97,11 @@ const clearValidation = (formElement, config) => {
     inputElement.setCustomValidity("");
   });
 
+  disableSubmitButton(buttonElement, config); // Используем новый метод
+};
+
+// Функция отключения кнопки отправки
+const disableSubmitButton = (buttonElement, config) => {
   buttonElement.classList.add(config.inactiveButtonClass);
   buttonElement.disabled = true;
 };

@@ -6,7 +6,6 @@ import { likeCard as likeCardFromAPI } from "./api.js";
 const cardTemplate = document.querySelector("#card-template").content;
 
 // Функция создания карточки
-// Функция создания карточки
 export function createCard(
   cardData,
   deleteCallback,
@@ -59,35 +58,14 @@ export function createCard(
 function openDeletePopup(cardId, cardElement) {
   const popupDelete = document.querySelector(".popup_type_delete");
   const buttonDelete = popupDelete.querySelector(".popup__button_type_delete");
-  const closeButton = popupDelete.querySelector(".popup__close");
 
   openModal(popupDelete); // Открываем попап
 
-  // Обработчик кнопки "Да"
-  buttonDelete.addEventListener("click", () => {
+  // Устанавливаем обработчик кнопки "Да" через onclick для предотвращения накопления обработчиков
+  buttonDelete.onclick = () => {
     deleteCard(cardElement, cardId); // Удаляем карточку
     closeModal(popupDelete); // Закрываем попап
-  });
-
-  // Обработчик закрытия попапа (клик на крестик)
-  closeButton.addEventListener("click", () => {
-    closeModal(popupDelete); // Закрываем попап
-  });
-
-  // Обработчик закрытия попапа при нажатии на клавишу Escape
-  document.addEventListener("keydown", function handleEscapeKey(evt) {
-    if (evt.key === "Escape") {
-      closeModal(popupDelete);
-      document.removeEventListener("keydown", handleEscapeKey); // Убираем обработчик после закрытия
-    }
-  });
-
-  // Обработчик закрытия попапа при клике вне попапа (overflow)
-  popupDelete.addEventListener("click", (evt) => {
-    if (evt.target === popupDelete) {
-      closeModal(popupDelete);
-    }
-  });
+  };
 }
 
 // Функция удаления карточки

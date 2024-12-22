@@ -17,106 +17,67 @@ const handleResponseError = async (response) => {
 
 // Функция для получения информации о пользователе
 export const getUserInfo = async () => {
-  try {
-    const response = await fetch(`${config.baseUrl}/users/me`, {
-      headers: config.headers,
-    });
-    return await handleResponseError(response);
-  } catch (error) {
-    console.error("Ошибка при получении информации о пользователе:", error);
-  }
+  const response = await fetch(`${config.baseUrl}/users/me`, {
+    headers: config.headers,
+  });
+  return handleResponseError(response);
 };
 
 // Функция для получения карточек с сервера
 export const getCards = async () => {
-  try {
-    const response = await fetch(`${config.baseUrl}/cards`, {
-      headers: config.headers,
-    });
-    return await handleResponseError(response);
-  } catch (error) {
-    console.error("Ошибка при получении карточек:", error);
-  }
+  const response = await fetch(`${config.baseUrl}/cards`, {
+    headers: config.headers,
+  });
+  return handleResponseError(response);
 };
 
 // Функция для редактирования профиля
 export const updateUserInfo = async (name, about) => {
-  try {
-    const response = await fetch(`${config.baseUrl}/users/me`, {
-      method: "PATCH",
-      headers: config.headers,
-      body: JSON.stringify({
-        name,
-        about,
-      }),
-    });
-    return await handleResponseError(response);
-  } catch (error) {
-    console.error("Ошибка при обновлении профиля:", error);
-  }
+  const response = await fetch(`${config.baseUrl}/users/me`, {
+    method: "PATCH",
+    headers: config.headers,
+    body: JSON.stringify({ name, about }),
+  });
+  return handleResponseError(response);
 };
 
 // Функция для добавления новой карточки
 export const addNewCard = async (name, link) => {
-  try {
-    const response = await fetch(`${config.baseUrl}/cards`, {
-      method: "POST",
-      headers: config.headers,
-      body: JSON.stringify({
-        name,
-        link,
-      }),
-    });
-    return await handleResponseError(response);
-  } catch (error) {
-    console.error("Ошибка при добавлении карточки:", error);
-  }
+  const response = await fetch(`${config.baseUrl}/cards`, {
+    method: "POST",
+    headers: config.headers,
+    body: JSON.stringify({ name, link }),
+  });
+  return handleResponseError(response);
 };
 
 // Функция для удаления карточки с сервера
 export const deleteCard = async (cardId) => {
-  try {
-    const response = await fetch(`${config.baseUrl}/cards/${cardId}`, {
-      method: "DELETE",
-      headers: config.headers,
-    });
-    return await handleResponseError(response);
-  } catch (error) {
-    console.error("Ошибка при удалении карточки:", error);
-  }
+  const response = await fetch(`${config.baseUrl}/cards/${cardId}`, {
+    method: "DELETE",
+    headers: config.headers,
+  });
+  return handleResponseError(response);
 };
 
 // Функция для постановки лайка
-export const likeCard = async (cardId, likeButton, likeCountElement) => {
-  const isLiked = likeButton.classList.contains("card__like-button_is-active");
+export const likeCard = async (cardId, isLiked) => {
   const method = isLiked ? "DELETE" : "PUT";
 
-  try {
-    const response = await fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
-      method,
-      headers: config.headers,
-    });
+  const response = await fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
+    method,
+    headers: config.headers,
+  });
 
-    const data = await handleResponseError(response);
-
-    likeButton.classList.toggle("card__like-button_is-active");
-    likeCountElement.textContent = data.likes.length;
-  } catch (error) {
-    console.error("Ошибка при обработке лайка:", error);
-  }
+  return await handleResponseError(response);
 };
 
 // Функция для обновления аватара
 export const updateAvatar = async (avatarUrl) => {
-  try {
-    const response = await fetch(`${config.baseUrl}/users/me/avatar`, {
-      method: "PATCH",
-      headers: config.headers,
-      body: JSON.stringify({ avatar: avatarUrl }),
-    });
-
-    return await handleResponseError(response);
-  } catch (error) {
-    console.error("Ошибка при обновлении аватара:", error);
-  }
+  const response = await fetch(`${config.baseUrl}/users/me/avatar`, {
+    method: "PATCH",
+    headers: config.headers,
+    body: JSON.stringify({ avatar: avatarUrl }),
+  });
+  return handleResponseError(response);
 };
